@@ -56,6 +56,20 @@ class Animal(models.Model):
 
     def __str__(self):
         return f"Chapeta {self.chapeta}"
+
+    def update_estado_by_age(self):
+        """Actualiza el estado a NOVILLA si ha pasado 365 días desde nacimiento y está en TERNERA."""
+        from datetime import timedelta
+        
+        if self.estado_actual == 'TERNERA':
+            dias_desde_nacimiento = (timezone.now().date() - self.fecha_nacimiento).days
+            if dias_desde_nacimiento >= 365:
+                self.estado_actual = 'NOVILLA'
+
+    def save(self, *args, **kwargs):
+        """Verifica y actualiza el estado según la edad antes de guardar."""
+        self.update_estado_by_age()
+        super().save(*args, **kwargs)
     
 
 
@@ -70,7 +84,6 @@ class Reproduction(models.Model):
     ESTADO_CHOICES = [
         ('PRENADA', 'Preñada'),
         ('VACIA', 'Vacía'),
-        ('OBSERVACION', 'Observación'),
     ]
 
     animal = models.ForeignKey(
@@ -89,12 +102,16 @@ class Reproduction(models.Model):
 
     toro = models.CharField(
         max_length=100,
-        help_text="Nombre del toro (finca o inseminación)"
+        help_text="Nombre del toro (finca o inseminación)",
+        blank=True,
+        null=True
     )
 
     estado = models.CharField(
-        max_length=15,
-        choices=ESTADO_CHOICES
+        max_length=20,
+        choices=ESTADO_CHOICES,
+        blank=True,
+        null=True
     )
 
     observaciones = models.TextField(blank=True)
