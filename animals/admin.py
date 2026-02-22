@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import Animal, Reproduction
 from django import forms
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
 
 class ReproductionInline(admin.TabularInline):
     model = Reproduction
@@ -12,24 +12,47 @@ class ReproductionInline(admin.TabularInline):
 
 @admin.register(Animal)
 class AnimalAdmin(admin.ModelAdmin):
-    list_display = ('chapeta', 'estado_actual', 'activa', 'alerta_secado')
+    list_display = ('chapeta', 'edad', 'estado_actual', 'activa', 'ultimo_evento_display', 'acciones')
     search_fields = ('chapeta',)
     list_filter = ('estado_actual', 'activa')
     autocomplete_fields = ['madre']
     inlines = [ReproductionInline]
 
-    @admin.display(description="Alerta secado", ordering=False)
-    def alerta_secado(self, obj):
-        alerta = obj.alerta_proxima_a_secar()
+    def ultimo_evento_display(self, obj):
+        """Obtiene el tipo y fecha del evento más reciente."""
+        # Accedemos a la relación inversa definida en el modelo
+        ultimo = obj.reproducciones.order_by('-fecha_evento', '-created_at').first()
+        if ultimo:
+            # get_tipo_display() devuelve el nombre legible (ej: 'Inseminación' en lugar de 'inseminacion')
+            return f"{ultimo.get_tipo_display()} - {ultimo.fecha_evento.strftime('%d/%m/%Y')}"
+        return "Sin eventos"
+    
+    # Configuramos el encabezado de la columna en el admin
+    ultimo_evento_display.short_description = 'Último Evento'
 
-        if alerta is True:
-            return mark_safe('<span style="color: orange; font-weight: bold;">⚠ Próxima a secar</span>')
+    def get_queryset(self, request):
+        """Optimizamos la consulta para mostrar el último evento sin hacer consultas adicionales por cada animal."""
+        queryset = super().get_queryset(request)
+        # Optimizamos la carga de las reproducciones relacionadas
+        return queryset.prefetch_related('reproducciones')
+    
 
-        if alerta is False:
-            return mark_safe('<span style="color: green;">✔ En tiempo</span>')
+    def acciones(self, obj):
+        """Genera un enlace para ver la ficha detallada del animal."""
+        # 'admin:animals_animal_change' se construye como: admin:APP_MODELO_change
+        url = reverse('admin:animals_animal_change', args=[obj.pk])
+        return format_html(
+            '<a href="{}" style="color: #28a745; font-weight: bold; text-decoration: none;">'
+            'Ver detalles'
+            '</a>',
+            url
+        )
+    
+    acciones.short_description = 'Acciones'
 
-        return "-"
-
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('reproducciones')
+    
 class ReproductionAdminForm(forms.ModelForm):
     class Meta:
         model = Reproduction
@@ -56,6 +79,7 @@ class ReproductionAdminForm(forms.ModelForm):
                 self.fields['toro'].initial = ultimo_evento.toro
         
     def clean(self):
+        """Valida las reglas de negocio para los eventos reproductivos."""
         cleaned_data = super().clean()
         tipo = cleaned_data.get('tipo')
         toro = cleaned_data.get('toro')
@@ -102,6 +126,22 @@ class ReproductionAdminForm(forms.ModelForm):
                     f"El diagnóstico solo se puede realizar después de 30 días. "
                     f"Han pasado solo {dias_transcurridos} días."
                 )
+
+        #---- VALIDACIÓN DE PARTO: MÍNIMO 260 DÍAS DESDE EL ÚLTIMO SERVICIO ----
+        if tipo == 'parto':
+            ultimo_servicio = (
+                Reproduction.objects
+                .filter(animal=animal, tipo__in=['inseminacion', 'monta'], fecha_evento__lt=fecha_evento)
+                .order_by('-fecha_evento').first()
+            )
+            if ultimo_servicio:
+                gestacion_dias = (fecha_evento - ultimo_servicio.fecha_evento).days
+                # Una gestación bovina dura aprox 280 días. 
+                # Validemos un rango lógico (ej. no menos de 260 días)
+                if gestacion_dias < 260:
+                    raise ValidationError(
+                        f"Fecha de parto inconsistente. Solo han pasado {gestacion_dias} días desde el servicio."
+                    )
 
         return cleaned_data
         

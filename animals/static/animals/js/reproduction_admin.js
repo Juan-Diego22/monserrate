@@ -44,3 +44,36 @@
         fillToroField();
     }
 })();
+
+
+// Control de visibilidad de campos según tipo de evento
+document.addEventListener("DOMContentLoaded", function () {
+
+    const tipoField = document.querySelector("#id_tipo");
+    const sexoCriaField = document.querySelector(".field-sexo_cria");
+    const toroField = document.querySelector(".field-toro");
+    const estadoField = document.querySelector(".field-estado");
+
+    function toggleFields() {
+
+        const tipo = tipoField.value;
+
+        if (tipo === "parto") {
+
+            if (sexoCriaField) sexoCriaField.style.display = "block";
+            if (toroField) toroField.style.display = "none";
+            if (estadoField) estadoField.style.display = "none";
+
+        } else {
+
+            if (sexoCriaField) sexoCriaField.style.display = "none";
+            if (toroField) toroField.style.display = "block";
+            if (estadoField) estadoField.style.display = "block";
+        }
+    }
+
+    if (tipoField) {
+        toggleFields(); // 👈 al cargar formulario
+        tipoField.addEventListener("change", toggleFields);
+    }
+});
