@@ -1,9 +1,7 @@
 import { useState } from "react";
 import "./dashboard.css";
 
-/* ─────────────────────────────────────────────
-   HELPERS
-───────────────────────────────────────────── */
+/* Ayudantes */
 
 const estadoLabel = {
   VACA_PRODUCCION: "Vaca Producción",
@@ -73,9 +71,7 @@ function EmptyState({ icon, title, subtitle }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   ANIMAL AVATAR
-───────────────────────────────────────────── */
+/* ANIMAL AVATAR */
 
 function AnimalAvatar({ color = "#8B6914", size = 44 }) {
   return (
@@ -95,9 +91,7 @@ function AnimalAvatar({ color = "#8B6914", size = 44 }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   WEIGHT BAR
-───────────────────────────────────────────── */
+/* Barra sobre peso (kg) */
 
 function WeightBar({ weight, color = "#8B6914", max = 800 }) {
   const pct = Math.min(((weight || 0) / max) * 100, 100);
@@ -117,9 +111,7 @@ function WeightBar({ weight, color = "#8B6914", max = 800 }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   SIDEBAR
-───────────────────────────────────────────── */
+/* Barra lateral */
 
 function Sidebar({ activeNav, setActiveNav }) {
   const navItems = [
@@ -166,9 +158,7 @@ function Sidebar({ activeNav, setActiveNav }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   TOP BAR
-───────────────────────────────────────────── */
+/* Barra superior */
 
 function TopBar({ online, pendingCount }) {
   return (
@@ -212,9 +202,7 @@ function TopBar({ online, pendingCount }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   ANIMAL CARD
-───────────────────────────────────────────── */
+/* Carta del animal */
 
 function AnimalCard({ animal, selected, onClick }) {
   return (
@@ -240,9 +228,7 @@ function AnimalCard({ animal, selected, onClick }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   REPRODUCTION TIMELINE
-───────────────────────────────────────────── */
+/* Cronología de la reprodución */
 
 function ReproduccionTimeline({ reproducciones }) {
   if (!reproducciones?.length) {
@@ -279,9 +265,7 @@ function ReproduccionTimeline({ reproducciones }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   ANIMAL DETAIL
-───────────────────────────────────────────── */
+/* Detalles del animal */
 
 function AnimalDetail({ animal }) {
   const [activeTab, setActiveTab] = useState("reproduccion");
@@ -371,9 +355,7 @@ function AnimalDetail({ animal }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   NUEVO EVENTO PANEL
-───────────────────────────────────────────── */
+/* Panel del nuevo evento */
 
 function NuevoEventoPanel({ animals, onClose, onSave }) {
   const eventTypes = [
@@ -600,9 +582,7 @@ function NuevoEventoPanel({ animals, onClose, onSave }) {
   );
 }
 
-/* ─────────────────────────────────────────────
-   MAIN DASHBOARD
-───────────────────────────────────────────── */
+/* Tablero principal */
 
 export default function FincaDashboard({ animals = [], alertas = [], online = false, pendingCount = 0 }) {
   const [activeNav,      setActiveNav]      = useState("dashboard");
