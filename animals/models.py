@@ -3,9 +3,6 @@ from django.utils import timezone
 from datetime import timedelta, date
 from django.core.exceptions import ValidationError
 
-
-
-
 class Animal(models.Model):
 
     SEXO_CHOICES = [

@@ -1,0 +1,432 @@
+/* ─── Reset / Base ─── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: #f9fafb;
+}
+
+/* ─── Layout principal ─── */
+.app {
+  display: flex;
+  min-height: 100vh;
+  background: #f9fafb;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* ─── Sidebar ─── */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 20px 24px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.sidebar__logo-icon {
+  width: 36px;
+  height: 36px;
+  background: #16a34a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__brand-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: #111827;
+}
+
+.sidebar__brand-sub {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.sidebar__nav {
+  padding: 16px 12px;
+  flex: 1;
+}
+
+.sidebar__nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  margin-bottom: 2px;
+  background: transparent;
+  color: #374151;
+  font-weight: 400;
+  font-size: 14px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar__nav-btn:hover {
+  background: #f3f4f6;
+}
+
+.sidebar__nav-btn--active {
+  background: #dcfce7;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.sidebar__nav-icon {
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar__nav-btn--active .sidebar__nav-icon {
+  color: #16a34a;
+}
+
+.sidebar__footer {
+  padding: 12px 12px 24px;
+}
+
+.sidebar__config-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  background: transparent;
+  color: #374151;
+  font-size: 14px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar__config-btn:hover {
+  background: #f3f4f6;
+}
+
+.sidebar__config-btn--active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* ─── Header de página ─── */
+.page-header {
+  padding: 28px 36px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.page-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.btn-registrar {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-registrar:hover {
+  background: #15803d;
+}
+
+/* ─── Contenido ─── */
+.content {
+  padding: 24px 36px 36px;
+  flex: 1;
+}
+
+/* ─── Dashboard view ─── */
+.dashboard-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─── Stats grid ─── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-card__label {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.stat-card__value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.stat-card__value--green  { color: #16a34a; }
+.stat-card__value--orange { color: #ea580c; }
+.stat-card__value--blue   { color: #2563eb; }
+
+.stat-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card__icon--blue   { background: #eff6ff; }
+.stat-card__icon--green  { background: #dcfce7; }
+.stat-card__icon--orange { background: #ffedd5; }
+
+/* ─── Banner de eventos ─── */
+.eventos-banner {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.eventos-banner__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #92400e;
+  font-size: 14px;
+}
+
+.eventos-banner__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eventos-banner__item {
+  font-size: 13px;
+  color: #92400e;
+}
+
+/* ─── Distribución por estado ─── */
+.distribucion-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px 24px;
+}
+
+.distribucion-card__title {
+  font-weight: 600;
+  font-size: 15px;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.distribucion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.distribucion-item {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.distribucion-item__count {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.distribucion-item__label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* ─── Últimos animales ─── */
+.ultimos-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px 24px;
+}
+
+.ultimos-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ultimos-card__title {
+  font-weight: 600;
+  font-size: 15px;
+  color: #111827;
+}
+
+.ultimos-card__ver-todos {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #16a34a;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.animal-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 4px;
+  gap: 14px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.animal-row:last-child {
+  border-bottom: none;
+}
+
+.animal-row__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.animal-row__info {
+  flex: 1;
+}
+
+.animal-row__nombre {
+  font-weight: 600;
+  font-size: 14px;
+  color: #111827;
+}
+
+.animal-row__meta {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.animal-row__badge {
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Colores de badges por estado */
+.badge--en_produccion { background: #dcfce7; color: #166534; }
+.badge--novilla       { background: #dbeafe; color: #1e40af; }
+.badge--seca          { background: #ffedd5; color: #9a3412; }
+.badge--ternera       { background: #f3f4f6; color: #374151; }
+.badge--descartada    { background: #fee2e2; color: #991b1b; }
+
+/* ─── Empty state ─── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 48px 24px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px dashed #d1d5db;
+  text-align: center;
+}
+
+.empty-state__icon {
+  font-size: 40px;
+}
+
+.empty-state__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.empty-state__subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+/* ─── Placeholder secciones en construcción ─── */
+.placeholder-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #9ca3af;
+  font-size: 15px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
