@@ -64,6 +64,12 @@ document.addEventListener("DOMContentLoaded", function () {
             if (toroField) toroField.style.display = "none";
             if (estadoField) estadoField.style.display = "none";
 
+        } else if (tipo === "secado") {
+
+            if (sexoCriaField) sexoCriaField.style.display = "none";
+            if (toroField) toroField.style.display = "none";
+            if (estadoField) estadoField.style.display = "none";
+
         } else {
 
             if (sexoCriaField) sexoCriaField.style.display = "none";

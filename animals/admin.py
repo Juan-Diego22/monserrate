@@ -101,6 +101,30 @@ class ReproductionAdminForm(forms.ModelForm):
         if tipo != 'diagnostico' and estado:
             raise ValidationError("El campo 'estado' solo se puede usar cuando el tipo es 'diagnostico'.")
         
+
+        # ---- EDAD MÍNIMA PARA SERVICIO (15 MESES) ----
+        if tipo in ('inseminacion', 'monta') and animal and fecha_evento:
+            # Calculamos la edad exacta al momento del evento
+            dias_edad = (fecha_evento - animal.fecha_nacimiento).days
+            # 15 meses son aproximadamente 456 días (30.4 días por mes)
+            meses_edad = dias_edad / 30.41
+            
+            if meses_edad < 15:
+                raise ValidationError(
+                    f"No se puede registrar una {tipo} para este animal. "
+                    f"La edad al momento del evento sería de {int(meses_edad)} meses, "
+                    f"y la edad mínima permitida en Monserrate es de 15 meses."
+                )
+
+        # ---- VALIDACIÓN DE ESTADO: NO PERMITIR SERVICIO A TERNERAS ----
+        if tipo in ('inseminacion', 'monta') and animal:
+            if animal.estado_actual == 'TERNERA':
+                raise ValidationError(
+                    f"Error de consistencia: El animal {animal.chapeta} figura como 'TERNERA'. "
+                    "No se puede registrar un evento reproductivo para una ternera. "
+                    "Primero debe alcanzar el estado de 'NOVILLA'."
+                )    
+
         # ---- NUEVA VALIDACIÓN: 30 DÍAS ----
         if tipo == 'diagnostico':
             ultimo_evento = (
@@ -142,6 +166,15 @@ class ReproductionAdminForm(forms.ModelForm):
                     raise ValidationError(
                         f"Fecha de parto inconsistente. Solo han pasado {gestacion_dias} días desde el servicio."
                     )
+
+        if tipo == 'secado' and animal:
+            # Solo se puede secar una vaca que está actualmente en producción
+            if animal.estado_actual != 'VACA_PRODUCCION':
+                raise ValidationError(
+                    f"No se puede secar a {animal.chapeta}. "
+                    f"Su estado actual es {animal.get_estado_actual_display()}, "
+                    "y solo se pueden secar vacas en producción."
+                )                
 
         return cleaned_data
         

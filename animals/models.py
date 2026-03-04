@@ -161,6 +161,7 @@ class Reproduction(models.Model):
         ('monta', 'Monta natural'),
         ('diagnostico', 'Diagnóstico'),
         ('parto', 'Parto'),
+        ('secado', 'Secado'),
     ]
 
     SEXO_CHOICES = [
@@ -240,18 +241,35 @@ class Reproduction(models.Model):
                 raise ValidationError("No debe indicar toro en un parto.")
 
             if self.estado:
-                raise ValidationError("No debe indicar estado en un parto.")
-
+                raise ValidationError("No debe indicar estado en un parto.") 
 
     def save(self, *args, **kwargs):
-        """Lógica de transición de estados automática al guardar."""
+        """
+        Lógica de transición de estados unificada.
+        Controla los cambios en el Animal según el evento registrado.
+        """
+        # 1. Guardamos primero el evento de reproducción
         super().save(*args, **kwargs)
-
+        
         animal = self.animal
+        cambio_realizado = False
+
+        # 2. Evaluamos el tipo de evento para actualizar el estado del Animal
         if self.tipo == 'parto':
+            # Al parir, la vaca (o novilla) entra en producción
             animal.estado_actual = 'VACA_PRODUCCION'
-            animal.save()
+            cambio_realizado = True
+            
+        elif self.tipo == 'secado':
+            # El evento manual de secado pasa a la vaca a estado 'SECA'
+            animal.estado_actual = 'SECA'
+            cambio_realizado = True
+            
         elif self.tipo == 'diagnostico' and self.estado == 'VACIA':
-            # Si estaba en producción, sigue ahí, pero si era novilla 
-            # y falla preñez, sigue siendo novilla. No requiere cambio.
+            # Aquí podrías agregar lógica extra si fuera necesario, 
+            # por ahora se mantiene el estado previo.
             pass
+
+        # 3. Solo disparamos el save del Animal si hubo un cambio real
+        if cambio_realizado:
+            animal.save()
