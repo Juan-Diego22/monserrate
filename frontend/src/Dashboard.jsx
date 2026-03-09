@@ -1,6 +1,13 @@
 import { useState } from "react";
 import "./Dashboard.css";
 import RegistrarAnimal from "./RegistrarAnimal";
+import { 
+  Dashboard as DashboardIcon, Pets as PetsIcon, 
+  CalendarMonth as CalendarMonthIcon, PrecisionManufacturing as ManufacturingIcon,
+  DensityMedium as SideBar, Settings as SettingsIcon, Moving as MovingIcon,
+  FavoriteBorder as FavoriteIcon, Leaderboard as LeaderboardIcon, 
+  Info as InfoIcon
+} from '@mui/icons-material';
 
 const ESTADO_LABEL = {
   VACA_PRODUCCION: "En Producción",
@@ -10,45 +17,24 @@ const ESTADO_LABEL = {
   DESCARTADA: "Descartada",
 };
 
-/* ─── Sidebar ─── */
+/* Sidebar */
 function Sidebar({ activeNav, setActiveNav }) {
   const items = [
     {
       key: "dashboard", label: "Dashboard",
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-          <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-        </svg>
-      ),
+      icon: <DashboardIcon sx={{ fontSize: 18, color: 'black' }} />
     },
     {
       key: "animales", label: "Animales",
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
-          <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
-          <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
-        </svg>
-      ),
+      icon: <PetsIcon sx={{ fontSize: 18 }} />,
     },
     {
       key: "reproduccion", label: "Reproducción",
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="3" y="4" width="18" height="18" rx="2"/>
-          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
-          <line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>
-      ),
+      icon: <CalendarMonthIcon sx={{ fontSize: 18 }} />
     },
     {
       key: "produccion", label: "Producción",
-      icon: (
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-        </svg>
-      ),
+      icon: <ManufacturingIcon sx={{ fontSize: 18 }} />,
     },
   ];
 
@@ -56,11 +42,7 @@ function Sidebar({ activeNav, setActiveNav }) {
     <aside className="sidebar">
       <div className="sidebar__logo">
         <div className="sidebar__logo-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-            <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
-            <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
-            <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
-          </svg>
+          <SideBar sx={{ fontSize: 18, color: 'white' }} />
         </div>
         <div>
           <div className="sidebar__brand-name">GanApp</div>
@@ -89,10 +71,7 @@ function Sidebar({ activeNav, setActiveNav }) {
           onClick={() => setActiveNav("configuracion")}
           className={`sidebar__config-btn${activeNav === "configuracion" ? " sidebar__config-btn--active" : ""}`}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-          </svg>
+          <SettingsIcon sx={{ fontSize: 18 }} />
           Configuración
         </button>
       </div>
@@ -100,7 +79,7 @@ function Sidebar({ activeNav, setActiveNav }) {
   );
 }
 
-/* ─── StatCard ─── */
+/* StatCard */
 function StatCard({ label, value, valueClass, iconClass, icon }) {
   return (
     <div className="stat-card">
@@ -113,7 +92,7 @@ function StatCard({ label, value, valueClass, iconClass, icon }) {
   );
 }
 
-/* ─── Dashboard view ─── */
+/* Dashboard view */
 function DashboardView({ animales, onRegistrar }) {
   const enProduccion = animales.filter(a => a.estado_actual === "VACA_PRODUCCION").length;
   const vacasSecas   = animales.filter(a => a.estado_actual === "SECA").length;
@@ -145,11 +124,7 @@ function DashboardView({ animales, onRegistrar }) {
           value={animales.length}
           iconClass="stat-card__icon--blue"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2">
-              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
-              <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
-              <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
-            </svg>
+            <SideBar sx={{ fontSize: 18, color: 'blue' }} />
           }
         />
         <StatCard
@@ -158,10 +133,7 @@ function DashboardView({ animales, onRegistrar }) {
           valueClass="stat-card__value--green"
           iconClass="stat-card__icon--green"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-              <polyline points="17 6 23 6 23 12"/>
-            </svg>
+            <MovingIcon sx={{ fontSize: 18, color: 'green' }} />
           }
         />
         <StatCard
@@ -170,9 +142,7 @@ function DashboardView({ animales, onRegistrar }) {
           valueClass="stat-card__value--orange"
           iconClass="stat-card__icon--orange"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ea580c" strokeWidth="2">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-            </svg>
+            <FavoriteIcon sx={{ fontSize: 18, color: 'orange' }} />
           }
         />
         <StatCard
@@ -181,10 +151,7 @@ function DashboardView({ animales, onRegistrar }) {
           valueClass="stat-card__value--blue"
           iconClass="stat-card__icon--blue"
           icon={
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2">
-              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-              <polyline points="17 6 23 6 23 12"/>
-            </svg>
+            <LeaderboardIcon sx={{ fontSize: 18, color: 'blue' }} />
           }
         />
       </div>
@@ -193,11 +160,7 @@ function DashboardView({ animales, onRegistrar }) {
       {hayEventos > 0 && (
         <div className="eventos-banner">
           <div className="eventos-banner__title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
+            <InfoIcon sx={{ fontSize: 18 }} />
             Próximos eventos importantes
           </div>
           <ul className="eventos-banner__list">
