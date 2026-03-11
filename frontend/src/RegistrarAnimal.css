@@ -1,0 +1,258 @@
+/* ─── Overlay ─── */
+.mf__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+/* ─── Caja del modal ─── */
+.mf__modal {
+  background: #fff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── Header ─── */
+.mf__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mf__header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mf__header-icon {
+  width: 36px;
+  height: 36px;
+  background: #16a34a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mf__title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #111827;
+}
+
+.mf__subtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.mf__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.mf__close:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* ─── Body ─── */
+.mf__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+  max-height: 65vh;
+}
+
+/* ─── Fila de dos columnas ─── */
+.mf__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ─── Campo ─── */
+.mf__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mf__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.mf__required {
+  color: #ef4444;
+}
+
+.mf__error {
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* ─── Input ─── */
+.mf__input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.mf__input:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.mf__input--err {
+  border-color: #ef4444 !important;
+}
+
+.mf__input--err:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* ─── Select ─── */
+.mf__sel-wrap {
+  position: relative;
+}
+
+.mf__select {
+  width: 100%;
+  padding: 9px 32px 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111827;
+  background: #fff;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.mf__select:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.mf__arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* ─── Toggle activa/inactiva ─── */
+.mf__toggle-group {
+  display: flex;
+  gap: 8px;
+}
+
+.mf__toggle {
+  padding: 8px 22px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mf__toggle:hover {
+  background: #f3f4f6;
+}
+
+.mf__toggle--on {
+  background: #dcfce7;
+  border-color: #16a34a;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.mf__toggle--off {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* ─── Footer ─── */
+.mf__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+/* ─── Botones ─── */
+.mf__btn {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+
+.mf__btn--cancel {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.mf__btn--cancel:hover {
+  background: #f3f4f6;
+}
+
+.mf__btn--save {
+  background: #16a34a;
+  color: #fff;
+}
+
+.mf__btn--save:hover {
+  background: #15803d;
+}
+
+.mf__btn--saved {
+  background: #166534;
+  cursor: default;
+}
