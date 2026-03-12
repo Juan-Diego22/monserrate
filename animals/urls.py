@@ -1,11 +1,15 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import AnimalViewSet, ReproductionViewSet
 from . import views
 
 app_name = 'animals'
 
+router = DefaultRouter()
+router.register(r'animals', AnimalViewSet)
+router.register(r'reproductions', ReproductionViewSet)
+
 urlpatterns = [
-    path('api/ultimo-toro/<int:animal_id>/', views.get_ultimo_toro, name='get_ultimo_toro'),
-    # path('api/animals/',          views.animal_list,      name='animal_list'),
-    # path('api/alertas/',          views.alertas_list,     name='alertas_list'),
-    # path('api/reproducciones/',   views.crear_reproduccion, name='crear_reproduccion'),
+    path('', include(router.urls)),
+    path('ultimo-toro/<int:animal_id>/', views.get_ultimo_toro, name='get_ultimo_toro'),
 ]
