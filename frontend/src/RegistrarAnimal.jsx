@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./RegistrarAnimal.css";
+import { Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 
 /* Opciones exactas del modelo Animal */
-
 const SEXO_CHOICES = [
   { value: "HEMBRA", label: "Hembra" },
   { value: "MACHO", label: "Macho" },
@@ -17,13 +17,13 @@ const ESTADO_CHOICES = [
 ];
 
 const INITIAL_FORM = {
-  chapeta:          "",   
+  chapeta: "",   
   fecha_nacimiento: "",   
-  sexo:             "",   
-  madre:            "",   
-  padre_nombre:     "",   
-  estado_actual:    "",   
-  activa:           true, 
+  sexo: "",   
+  madre: "",   
+  padre_nombre: "",   
+  estado_actual: "",   
+  activa: true, 
 };
 
 /* Componente Field */
@@ -55,7 +55,7 @@ export default function RegistrarAnimal({ animales = [], onClose, onGuardar }) {
   const validate = () => {
     const e = {};
     if (!form.chapeta.trim()) e.chapeta = "La chapeta es obligatoria.";
-    if (!form.fecha_nacimiento)    e.fecha_nacimiento = "La fecha de nacimiento es obligatoria.";
+    if (!form.fecha_nacimiento) e.fecha_nacimiento = "La fecha de nacimiento es obligatoria.";
     if (!form.sexo) e.sexo = "El sexo es obligatorio.";
     if (!form.padre_nombre.trim()) e.padre_nombre = "El nombre del padre / toro es obligatorio.";
     if (!form.estado_actual) e.estado_actual = "El estado es obligatorio.";
@@ -68,7 +68,7 @@ export default function RegistrarAnimal({ animales = [], onClose, onGuardar }) {
 
     onGuardar?.({
       ...form,
-      madre: form.madre || null,   // null si no se seleccionó
+      madre: form.madre || null, // null si no se seleccionó
     });
 
     setSaved(true);
@@ -86,9 +86,7 @@ export default function RegistrarAnimal({ animales = [], onClose, onGuardar }) {
         <div className="mf__header">
           <div className="mf__header-left">
             <div className="mf__header-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-              </svg>
+              <AddIcon sx={{ fontSize: 18, color: 'white' }}/>
             </div>
             <div>
               <div className="mf__title">Registrar Animal</div>
@@ -96,9 +94,7 @@ export default function RegistrarAnimal({ animales = [], onClose, onGuardar }) {
             </div>
           </div>
           <button className="mf__close" onClick={onClose}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
+            <CloseIcon sx={{ fontSize: 18 }} />
           </button>
         </div>
 
