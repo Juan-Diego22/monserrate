@@ -4,7 +4,6 @@ from .views import AnimalViewSet, ReproductionViewSet
 from . import views
 
 app_name = 'animals'
-
 router = DefaultRouter()
 router.register(r'animals', AnimalViewSet)
 router.register(r'reproductions', ReproductionViewSet)

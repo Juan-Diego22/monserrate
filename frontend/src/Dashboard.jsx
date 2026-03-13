@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Dashboard.css";
 import RegistrarAnimal from "./RegistrarAnimal";
+import AnimalsPage from "./AnimalsPage";
 import { 
   Dashboard as DashboardIcon, Pets as PetsIcon, 
   CalendarMonth as CalendarMonthIcon, PrecisionManufacturing as ManufacturingIcon,
@@ -93,7 +94,7 @@ function StatCard({ label, value, valueClass, iconClass, icon }) {
 }
 
 /* Dashboard view */
-function DashboardView({ animales, onRegistrar }) {
+function DashboardView({ animales, onRegistrar, onVerTodos }) {
   const enProduccion = animales.filter(a => a.estado_actual === "VACA_PRODUCCION").length;
   const vacasSecas   = animales.filter(a => a.estado_actual === "SECA").length;
   const conLitros    = animales.filter(a => a.litros_promedio);
@@ -217,7 +218,7 @@ function DashboardView({ animales, onRegistrar }) {
         <div className="ultimos-card">
           <div className="ultimos-card__header">
             <div className="ultimos-card__title">Últimos Animales Registrados</div>
-            <button className="ultimos-card__ver-todos">Ver todos ›</button>
+            <button className="ultimos-card__ver-todos" onClick={onVerTodos}>Ver todos ›</button>
           </div>
           <div>
             {[...animales].reverse().slice(0, 5).map((a) => (
@@ -248,10 +249,34 @@ export default function Dashboard() {
   const [animales,  setAnimales]  = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  const handleGuardar = (nuevoAnimal) => {
-    const conId = { ...nuevoAnimal, id: Date.now() };
-    setAnimales(prev => [...prev, conId]);
-    setShowModal(false);
+  // Fetch animals data on mount
+  useEffect(() => {
+    fetch('/api/animals/')
+      .then(response => response.json())
+      .then(data => setAnimales(data))
+      .catch(error => console.error('Error fetching animals:', error));
+  }, []);
+
+  const handleGuardar = async (nuevoAnimal) => {
+    try {
+      const response = await fetch('/api/animals/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoAnimal),
+      });
+      if (response.ok) {
+        // Refetch the animals after saving
+        const data = await fetch('/api/animals/').then(res => res.json());
+        setAnimales(data);
+        setShowModal(false);
+      } else {
+        console.error('Error saving animal');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -270,8 +295,14 @@ export default function Dashboard() {
         </div>
 
         <div className="content">
-          {activeNav === "dashboard" && <DashboardView animales={animales} onRegistrar={() => setShowModal(true)} />}
-          {activeNav === "animales" && <div className="placeholder-section">Módulo Animales — próximamente</div>}
+          {activeNav === "dashboard" && (
+            <DashboardView 
+              animales={animales} 
+              onRegistrar={() => setShowModal(true)}
+              onVerTodos={() => setActiveNav("animales")}
+          />
+        )}
+          {activeNav === "animales" && <AnimalsPage/>}
           {activeNav === "reproduccion" && <div className="placeholder-section">Módulo Reproducción — próximamente</div>}
           {activeNav === "produccion" && <div className="placeholder-section">Módulo Producción — próximamente</div>}
           {activeNav === "configuracion" && <div className="placeholder-section">Configuración — próximamente</div>}
