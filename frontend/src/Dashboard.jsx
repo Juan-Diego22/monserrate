@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import "./Dashboard.css";
 import RegistrarAnimal from "./RegistrarAnimal";
 import AnimalsPage from "./AnimalsPage";
+import ReproduccionPage from "./ReproduccionPage";
 import { 
-  Dashboard as DashboardIcon, Pets as PetsIcon, 
+  Dashboard as DashboardIcon, 
   CalendarMonth as CalendarMonthIcon, PrecisionManufacturing as ManufacturingIcon,
   DensityMedium as SideBar, Settings as SettingsIcon, Moving as MovingIcon,
   FavoriteBorder as FavoriteIcon, Leaderboard as LeaderboardIcon, 
@@ -27,7 +28,7 @@ function Sidebar({ activeNav, setActiveNav }) {
     },
     {
       key: "animales", label: "Animales",
-      icon: <PetsIcon sx={{ fontSize: 18 }} />,
+      icon: <span style={{ fontSize: '18px' }}>🐄</span>,
     },
     {
       key: "reproduccion", label: "Reproducción",
@@ -43,7 +44,7 @@ function Sidebar({ activeNav, setActiveNav }) {
     <aside className="sidebar">
       <div className="sidebar__logo">
         <div className="sidebar__logo-icon">
-          <SideBar sx={{ fontSize: 18, color: 'white' }} />
+          🐄
         </div>
         <div>
           <div className="sidebar__brand-name">GanApp</div>
@@ -175,11 +176,6 @@ function DashboardView({ animales, onRegistrar, onVerTodos }) {
                 • Chapeta {a.chapeta} - Diagnóstico de preñez pendiente
               </li>
             ))}
-            {conVacunacion.map(a => (
-              <li key={a.id + "-vac"} className="eventos-banner__item">
-                • Chapeta {a.chapeta} - Vacunación programada: {a.vacunacion}
-              </li>
-            ))}
           </ul>
         </div>
       )}
@@ -303,7 +299,7 @@ export default function Dashboard() {
           />
         )}
           {activeNav === "animales" && <AnimalsPage/>}
-          {activeNav === "reproduccion" && <div className="placeholder-section">Módulo Reproducción — próximamente</div>}
+          {activeNav === "reproduccion" && <ReproduccionPage />}
           {activeNav === "produccion" && <div className="placeholder-section">Módulo Producción — próximamente</div>}
           {activeNav === "configuracion" && <div className="placeholder-section">Configuración — próximamente</div>}
         </div>

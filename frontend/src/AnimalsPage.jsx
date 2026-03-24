@@ -314,8 +314,6 @@ export default function AnimalesPage() {
                   <span className="ap-card-meta">
                     {calcularEdad(animal.fecha_nacimiento)}
                     &nbsp;·&nbsp;
-                    {animal.sexo === "HEMBRA" ? "Hembra" : "Macho"}
-                    &nbsp;·&nbsp;
                     Padre: {animal.padre_nombre}
                   </span>
                 </div>

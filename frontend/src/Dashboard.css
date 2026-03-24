@@ -48,7 +48,7 @@ body {
 .sidebar__logo-icon {
   width: 36px;
   height: 36px;
-  background: #16a34a;
+  background: #a8daba;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -417,6 +417,7 @@ body {
   color: #6b7280;
   margin-bottom: 8px;
 }
+
 
 /* ─── Placeholder secciones en construcción ─── */
 .placeholder-section {

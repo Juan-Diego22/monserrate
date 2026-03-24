@@ -1,0 +1,189 @@
+/* ReproduccionPage.css - Estilos específicos para el módulo de Reproducción */
+
+.reproduccion-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.reproduccion-page h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.reproduccion-page h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+/* Formulario */
+.ap-form {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ap-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ap-form-row label {
+  font-size: 13px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.ap-form-row input,
+.ap-form-row select,
+.ap-form-row textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+.ap-form-row input:focus,
+.ap-form-row select:focus,
+.ap-form-row textarea:focus {
+  outline: none;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.ap-form-row textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.ap-form-row--full {
+  grid-column: 1 / -1;
+}
+
+.ap-form button[type="button"] {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 8px;
+  width: fit-content;
+}
+
+.ap-form button[type="button"]:hover {
+  background: #e5e7eb;
+}
+
+.ap-form .btn-registrar {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  grid-column: 1 / -1;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+.ap-form .btn-registrar:hover {
+  background: #15803d;
+}
+
+.ap-form .btn-registrar:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Alertas */
+.ap-alert {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ap-alert--success {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #a7f3d0;
+}
+
+.ap-alert--error {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+/* Tabla */
+.ap-table-wrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ap-table th,
+.ap-table td {
+  border-bottom: 1px solid #f3f4f6;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.ap-table th {
+  color: #6b7280;
+  background: #f9fafb;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ap-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ap-table tr:hover {
+  background: #f9fafb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ap-form {
+    grid-template-columns: 1fr;
+  }
+
+  .ap-table th,
+  .ap-table td {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
